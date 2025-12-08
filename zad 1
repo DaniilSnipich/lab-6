@@ -41,11 +41,27 @@ def load_workouts_data():
         print("Файл workouts.xml не найден!")
         return []
 
+def get_stats(users, workouts):
+    stats = {}
+    stats["total_workouts"] = len(workouts)
+    stats["total_users"] = len(users)
+    stats["total_calories"] = sum(workout["calories"] for workout in workouts)
+    stats["total_duration"] = sum(workout["duration"] for workout in workouts)
+    stats["total_distance"] = sum(workout["distance"] for workout in workouts)
+    return stats
+
 def main():
     users = load_users_data()
     workouts = load_workouts_data()
-    print(f"Загружено пользователей: {len(users)}")
-    print(f"Загружено тренировок: {len(workouts)}")
+
+    stats = get_stats(users, workouts)
+    print("ОБЩАЯ СТАТИСТИКА")
+    print("=" * 30)
+    print(f"Всего тренировок: {stats['total_workouts']}")
+    print(f"Всего пользователей: {stats['total_users']}")
+    print(f"Сожжено калорий: {stats['total_calories']}")
+    print(f"Общее время: {stats['total_duration']} минут")
+    print(f"Пройдено дистанции: {stats['total_distance']} км")
 
 if __name__ == "__main__":
     main()
